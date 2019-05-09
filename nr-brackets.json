@@ -1,0 +1,38 @@
+{
+    "2018": [{
+            "max": 9525,
+            "percentage": 10
+        },
+        {
+            "min": 9525,
+            "max": 38700,
+            "percentage": 12
+        },
+        {
+            "min": 38700,
+            "max": 82500,
+            "percentage": 22
+        },
+        {
+            "min": 82500,
+            "max": 157500,
+            "percentage": 24
+        },
+        {
+            "min": 157500,
+            "max": 200000,
+            "percentage": 32
+        },
+        {
+            "min": 200000,
+            "max": 500000,
+            "percentage": 35,
+            "married_max": 300000
+        },
+        {
+            "min": 500000,
+            "percentage": 37,
+            "married_min": 300000
+        }
+    ]
+}
