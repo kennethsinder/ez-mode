@@ -9,9 +9,11 @@ For the first iteration, I just want to get to a service that will consume W-2 d
 - [x] JSON-file data source for tax brackets + code to map taxable income to tax.
 - [ ] Logic to map W-2 data to the appropriate amount of taxable federal income.
 - [ ] Wire together command-line input of W-2 boxes and proper output of 1040 lines.
+- [ ] Some notion of "versioning" the data structures we'll use to represent the 1040NR-EZ document, to support it evolving over time from changes by the IRS.
 
 Things I want to do after that:
 
 - [ ] Reduce the number of assumptions about the filer (and also document these assumptions!)
 - [ ] Front-end UI for all of the above.
 - [ ] Support for state tax returns (e.g. California 540NR Short Form).
+- [ ] Look for external APIs we can use as data sources rather than hard-coding line-number structures of documents and the tax brackets year-by-year.
