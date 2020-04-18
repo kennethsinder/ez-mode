@@ -4,8 +4,15 @@ from bracket_service import BracketService
 bracket_svc = BracketService()
 
 
-def fill_1040nrez(w2):
-    result = {}
+def fill_1040nrez(w2s):
+    w2 = {}
+    for form in w2s:
+        for key in form:
+            if key not in w2:
+                w2[key] = form[key]
+            else:
+                w2[key] += form[key]
+
     result['1'] = 1  # Single non-resident alien
     result['2'] = 0  # Not married non-resident alien
     result['3'] = w2['1']  # Total wages, etc.
@@ -31,6 +38,6 @@ w2 = {
     '17': 2000,
 }
 
-federal_return = fill_1040nrez(w2)
+federal_return = fill_1040nrez([w2])
 for line_num in sorted(federal_return.keys()):
     print('{} {}'.format(line_num, federal_return[line_num]))

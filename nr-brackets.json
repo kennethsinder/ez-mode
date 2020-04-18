@@ -34,5 +34,41 @@
             "percentage": 37,
             "married_min": 300000
         }
+    ],
+    "2019": [{
+            "max": 9700,
+            "percentage": 10
+        },
+        {
+            "min": 9700,
+            "max": 39475,
+            "percentage": 12
+        },
+        {
+            "min": 39475,
+            "max": 84200,
+            "percentage": 22
+        },
+        {
+            "min": 84200,
+            "max": 160725,
+            "percentage": 24
+        },
+        {
+            "min": 160725,
+            "max": 204100,
+            "percentage": 32
+        },
+        {
+            "min": 204100,
+            "max": 510300,
+            "percentage": 35,
+            "married_max": 408200
+        },
+        {
+            "min": 510300,
+            "percentage": 37,
+            "married_min": 612350
+        }
     ]
 }
