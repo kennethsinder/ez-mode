@@ -1,10 +1,12 @@
 
 from bracket_service import BracketService
+from f1040nre import Form1040NrEz
+from form_io import FormPdf
 
 bracket_svc = BracketService()
 
 
-def fill_1040nrez(w2s):
+def fill_1040nrez(w2s, f1040nre):
     w2 = {}
     for form in w2s:
         for key in form:
@@ -13,9 +15,10 @@ def fill_1040nrez(w2s):
             else:
                 w2[key] += form[key]
 
-    result['1'] = 1  # Single non-resident alien
-    result['2'] = 0  # Not married non-resident alien
-    result['3'] = w2['1']  # Total wages, etc.
+    result = {}
+    result['1'] = True      # Single non-resident alien
+    result['2'] = False     # Not married non-resident alien
+    result['3'] = w2['1']   # Total wages, etc.
     result['7'] = result['3']
     result['10'] = result['7']
     result['11'] = w2['17']
@@ -29,6 +32,8 @@ def fill_1040nrez(w2s):
         result['22'] = float(result['21']) - float(result['17'])
     else:
         result['25'] = float(result['17']) - float(result['21'])
+    for key in result:
+        f1040nre.data[key] = '{}'.format(result[key])
     return result
 
 
@@ -38,6 +43,9 @@ w2 = {
     '17': 2000,
 }
 
-federal_return = fill_1040nrez([w2])
+f1040nre = Form1040NrEz('2019')
+federal_return = fill_1040nrez([w2], f1040nre)
 for line_num in sorted(federal_return.keys()):
     print('{} {}'.format(line_num, federal_return[line_num]))
+f1040nre_pdf = FormPdf(f1040nre.get_template_path(), 'f1040nre-output.pdf')
+f1040nre_pdf.write_output(f1040nre.get_values())
