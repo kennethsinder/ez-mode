@@ -37,14 +37,51 @@ def fill_1040nrez(w2s, f1040nre):
     return result
 
 
-w2 = {
-    '1': 35000,
-    '2': 3000,
-    '17': 2000,
-}
+def input_and_validate(prompt, t=str):
+    if t == bool:
+        prompt += ' [y/n]'
+    prompt += ' '
+    while True:
+        result = input(prompt)
+        try:
+            if result in t:
+                return result
+        except TypeError:
+            if t == bool and result in {'Y', 'N', 'y', 'n'}:
+                return result in {'Y', 'y'}
+            if isinstance(result, t):
+                return result
+            try:
+                return t(result)
+            except:
+                pass
 
+# w2 = {
+#     '1': 35000,
+#     '2': 3000,
+#     '17': 2000,
+# }
+
+data = {}
+data['first_name'] = input_and_validate("Hey there! What's your first name?")
+data['last_name'] = input_and_validate("What's your last name?")
+data['ssn'] = input_and_validate('SSN/ITIN:', int)
+data['street_address'] = input_and_validate('(Foreign country) street number and address:')
+data['city'] = input_and_validate('(Foreign) city/town name:')
+data['fc_province'] = input_and_validate('State/province:')
+data['fc_postal_code'] = input_and_validate('Postal/ZIP code:')
+data['fc_name'] = input_and_validate('Country name:')
 f1040nre = Form1040NrEz('2019')
-federal_return = fill_1040nrez([w2], f1040nre)
+f1040nre.data = data
+num_w2 = input_and_validate('How many W2s do you have?', int)
+w2s = []
+for i in range(1, 1 + num_w2):
+    w2 = {}
+    w2['1'] = int(round(input_and_validate('Line 1 on your W-2 #{} please:'.format(i), float)))
+    w2['2'] = int(round(input_and_validate('Line 2 on your W-2 #{} please:'.format(i), float)))
+    w2['17'] = int(round(input_and_validate('Line 17 on your W-2 #{} please:'.format(i), float)))
+    w2s.append(w2)
+federal_return = fill_1040nrez(w2s, f1040nre)
 for line_num in sorted(federal_return.keys()):
     print('{} {}'.format(line_num, federal_return[line_num]))
 f1040nre_pdf = FormPdf(f1040nre.get_template_path(), 'f1040nre-output.pdf')
